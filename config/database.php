@@ -1,6 +1,6 @@
 <?php
 class Database {
-    private $host = 'localhost';
+    private $host = 'menu-order-db';
     private $db_name = 'menu_order_db';
     private $username = 'root';
     private $password = '';
@@ -106,7 +106,7 @@ class Database {
         $ch = curl_init();
         
         // Set cURL options
-        $url = "http://localhost/FoodDeliveryApp/restaurant-listing-service/restaurants?id=$restaurantId";
+        $url = "http://host.docker.internal:8002/restaurant-listing-service/restaurants?id=$restaurantId";
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     
@@ -154,7 +154,7 @@ class Database {
     }
 
     private function getUserDetails($user_id) {
-        $userDetailsApiUrl = 'http://localhost/FoodDeliveryApp/user-service/users?id=' . $user_id;
+        $userDetailsApiUrl = 'http://host.docker.internal:8001/user-service/users?id=' . $user_id;
     
         // Initialize cURL session
         $ch = curl_init($userDetailsApiUrl);

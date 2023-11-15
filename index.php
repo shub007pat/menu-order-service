@@ -20,7 +20,7 @@ $request = explode('/', trim($path, '/'));
 // Connect to the database
 $db = new Database();
 
-if ($method === 'GET' && $request[1] === 'menu') {
+if ($method === 'GET' && $request[0] === 'menu') {
     // To get the menu of a specific restaurant, pass the restaurant_id as a query parameter
     $restaurant_id = isset($_GET['restaurant_id']) ? $_GET['restaurant_id'] : null;
     
@@ -31,22 +31,22 @@ if ($method === 'GET' && $request[1] === 'menu') {
         // Return an error or handle the case where restaurant_id is missing
         echo json_encode(array('error' => 'Restaurant ID is missing'));
     }
-} elseif ($method === 'POST' && $request[1] === 'orders') {
+} elseif ($method === 'POST' && $request[0] === 'orders') {
     // Add a new order
     $input = json_decode(file_get_contents('php://input'), true);
     $order_id = $db->createOrder($input);
     echo json_encode(array('order_id' => $order_id));
-} elseif ($method === 'GET' && $request[1] === 'orders' && isset($_GET['user_id'])) {
+} elseif ($method === 'GET' && $request[0] === 'orders' && isset($_GET['user_id'])) {
     $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
     // Retrieve orders
     $orders = $db->getOrdersByUser($user_id);
     echo json_encode($orders);
-} elseif ($method === 'GET' && $request[1] === 'orders' && isset($_GET['order_id'])) {
+} elseif ($method === 'GET' && $request[0] === 'orders' && isset($_GET['order_id'])) {
     $order_id = isset($_GET['order_id']) ? $_GET['order_id'] : null;
     // Retrieve orders
     $order = $db->getOrderDetails($order_id);
     echo json_encode($order);
-} elseif ($method === 'POST' && $request[1] === 'menu') {
+} elseif ($method === 'POST' && $request[0] === 'menu') {
     // Add a new menu item
     $input = json_decode(file_get_contents('php://input'), true);
     $menu_id = $db->addMenuItem($input);

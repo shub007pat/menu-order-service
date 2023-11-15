@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: menu-order-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: menu-order-service
+  template:
+    metadata:
+      labels:
+        app: menu-order-service
+    spec:
+      containers:
+        - name: menu-order-service
+          image: shub007pat/menu-order-service
+          ports:
+            - containerPort: 80
