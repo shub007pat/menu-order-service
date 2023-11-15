@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  user-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'menu_order_db'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'password'
+    ports:
+      - "3307:3306"
+    volumes:
+      - menu-order-db-data:/var/lib/mysql
+  user-service:
+    build: ./path/to/menu-order-service
+    depends_on:
+      - menu-order-db
+    ports:
+      - "8001:80"
+    environment:
+      DB_HOST: menu-order-db
+      DB_NAME: menu_order_db
+      DB_USER: root
+      DB_PASS: password
+volumes:
+  user-db-data:
